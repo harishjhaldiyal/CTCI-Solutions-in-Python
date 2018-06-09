@@ -11,6 +11,7 @@ therefore it will throw an error
 
 def deleteMiddleNode(node):
     if ((node is None) or (node.next is None)):
+        # node = node.next DO NOT WRITE THIS BECAUSE NOTHING WILL CHANGE
         next_node = node.next
         node.val = next_node.val
         node.next = next_node.next
