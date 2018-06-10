@@ -61,10 +61,9 @@ def twoPointer(head,k):
                 return slow_node
                 
 """
-the whole idea of doing this solution is that we are finding the index of the current node and the index is starting from the end of the linked list 
-which means that if there are n nodes in the linked list then the index of the first node would be n and the index with of the last note would be 1; 
-therefore we are performing a recursive solution and when we get the index of the current node, we also check that if the index is equal to K - if it 
-is equal to k then we are sure that the current node is the K-th to the last node and we return the value for that node
+This algorithm recurses through the linked list. When it hits the end, the method passes back a counter set
+to 0. Each parent call adds 1 to this counter. When the counter equals k, we know we have reached the kth
+to last element of the linked list.
 """
 
 
