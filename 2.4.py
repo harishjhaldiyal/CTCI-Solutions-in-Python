@@ -128,5 +128,6 @@ def process3(head, par):
                 prev_node.next = cur_node.next
                 cur_node = cur_node.next
                 position+=1
+    return head
             
     
