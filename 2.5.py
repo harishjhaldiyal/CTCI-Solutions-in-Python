@@ -81,4 +81,79 @@ def process2(node1, node2, carry):
             return resultNode
         else:
             return
+            
+            
+"""
+One list may be shorter than the other, and we cannot handle this "on the flY:' For example, suppose we
+were adding (1 -> 2 -> 3-> 4) and (5-> 6-> 7). We need to know that the 5 should be"matched"with the
+2, not the 1. We can accomplish this by comparing the lengths of the lists in the beginning and padding
+the shorter list with zeros.
+
+We start the iteration from the starting of the linked lists and add the corresponding nodes with taking care of the case when head nodes are added.
+"""
+
+
+def followUpIteratively(l1, l2):
+    len1 = lengthLL(l1)
+    len2 = lengthLL(l2)
+    if (len2 < len1):
+        l2 = addPadding(l2, len1 - len2)
+    resultLL = LinkedList()
+    ptr1 = l1.head
+    ptr2 = l2.head
+    carry = 0
+    while ((ptr1 is not None) and (ptr2 is not None)):
+        summ = ptr1.value + ptr2.value
+        if (summ > 9):
+            twosPos = int(summ/10)
+            onesPos = int(summ%10)
+            val = twosPos + carry
+            resultLL.add(val)
+            carry = onesPos
+        else:
+            if ((ptr1 == l1.head) and (ptr2 == l2.head)):
+                carry = summ
+            else:
+                val = carry
+                resultLL.add(val)
+                carry = summ
+        ptr1 = ptr1.next
+        ptr2 = ptr2.next
+    resultLL.add(carry)
+    return resultLL
+        
+        
+def followUpRecursively(head1, head2, carry, flag):
+    """
+    ASSUMING THAT THE CODE IN THIS COMMENT HAS ALREADY BEEN CHECKED
+    len1 = lengthLL(head1)
+    len2 = lengthLL(head2)
+    if (len2 < len1):
+        head2 = addPadding(head2, len1 - len2)"""
+    if ((head1 is None) and (head2 is None)):
+        node = Node(carry)
+        return node
+    else:
+        summ = head1.value + head2.value
+        if (summ > 9):
+            twosPos = int(summ/10)
+            onesPos = int(summ%10)
+            val = twosPos+carry
+            node = Node(val)
+            carry = onesPos
+            node.next = followUpRecursively(head1.next, head2.next, carry, flag)
+            return node
+        else:
+            if (flag):
+                carry = summ
+                flag = False
+                node = followUpRecursively(head1.next, head2.next, carry, flag)
+                return node
+            else:
+                val = carry
+                node = Node(val)
+                carry = summ
+                node.next = followUpRecursively(head1.next, head2.next, carry, flag)
+                return node
+        
         
