@@ -102,9 +102,6 @@ def process2(head):
             slowptr = slowptr.next
             fastptr = fastptr.next.next
         elif ((fastptr is not None) and (fastptr.next is None)):
-            if (slowptr.next is None): #for linked list having only one node
-                stack.insert(0,slowptr.value)
-                break
             slowptr = slowptr.next
             break
         elif (fastptr is None):
