@@ -50,11 +50,15 @@ def process (headA, headB):
         print ("No intersection")
     
     else:
-        if (lenB > lenA):
-            headA, headB = headB, headA
+        # DO NOT swap the head nodes in the following manner because then only the head nodes would be swapped and not the other nodes
+        """if (lenB > lenA):
+            headA, headB = headB, headA"""
+            
+        biggerList = headA if (lenA >= lenB) else headB
+        shorterList = headA if (lenA < lenB) else headB
         
-        ptr1 = headA
-        ptr2 = headB
+        ptr1 = biggerList
+        ptr2 = shorterList
         diff = abs(lenA - lenB)
         while (ptr1 != ptr2):
             for i in range (1,diff+1):
