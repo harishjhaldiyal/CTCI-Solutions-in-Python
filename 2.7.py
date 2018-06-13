@@ -15,7 +15,11 @@ section.
 
 2. input_check (headA, headB)
 
-3. process (headA, headB)"""
+3. process (headA, headB)
+
+4. getLengthAndTail (head)
+
+5. one class called "lengthAndTail" to bound length and tail and the return from a function"""
 
 """
 1->2->3->4->x
@@ -28,41 +32,23 @@ section.
 
 
 def process (headA, headB):
-    tailA = None
-    tailB = None
-    lenA = 0
-    lenB = 0
-    ptrA = headA
-    ptrB = headB
-    while (ptrA is not None):
-        lenA += 1
-        if (ptrA.next is None):
-            tailA = ptrA
-        ptrA = ptrA.next
+    resultA = getLengthAndTail (headA) #you are not taking any risk because you are passing by reference, not by value, and also the return is a reference
+    resultB = getLengthAndTail (headB)
     
-    while (ptrB is not None):
-        lenB += 1
-        if (ptrB.next is None):
-            tailB = ptrB
-        ptrB = ptrB.next
-        
-    if (tailA != tailB):
+    if (resultA.tail != resultB.tail):
         print ("No intersection")
     
     else:
         # DO NOT swap the head nodes in the following manner because then only the head nodes would be swapped and not the other nodes
-        """if (lenB > lenA):
+        """if (resultA.length > resultB.length):
             headA, headB = headB, headA"""
             
-        biggerList = headA if (lenA >= lenB) else headB
-        shorterList = headA if (lenA < lenB) else headB
-        
-        ptr1 = biggerList
+        biggerList = headA if (resultA.length >= resultB.length) else headB
+        shorterList = headA if (resultA.length < resultB.length) else headB
+               
+        ptr1 = getKthNode (biggerList, resultA.length, resultB.length) #you are not taking any risk because you are passing by reference, not by value, and also the return is a reference
         ptr2 = shorterList
-        diff = abs(lenA - lenB)
         while (ptr1 != ptr2):
-            for i in range (1,diff+1):
-                ptr1 = ptr1.next
             ptr1 = ptr1.next
             ptr2 = ptr2.next
         return ptr1
@@ -80,5 +66,38 @@ def intersection (headA, headB):
         
     else:
         print ("Invalid Input")
+        
+def getKthNode (headA, lenA, lenB):
+    diff = abs(lenA - lenB)
+    ptr1 = headA
+    for i in range (1,diff+1):
+        ptr1 = ptr1.next
+    return ptr1
+        
+def getLengthAndTail (head):
+    tail = None
+    length = 0
+    ptr = head
+    while (ptr is not None):
+        length += 1
+        if (ptr.next is None):
+            tail = ptr
+        ptr = ptr.next
+        
+    result = lengthAndTail (length, tail)
+    return result
+    
+        
+        
+class lengthAndTail (object):
+    def __init__(self, length, tail):
+        self.length = length
+        self.tail = tail
+        
+    def length (self):
+        return self.length
+        
+    def tail (self):
+        return self.tail
         
     
