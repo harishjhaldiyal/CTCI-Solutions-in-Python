@@ -95,7 +95,7 @@ if fastptr doesn't exists -> length of the LL is even
 def process2(head):
     slowptr = head
     fastptr = head
-    stack = []
+    stack = [] #you should ask interviewer whether or not you can use stack like this or as a custom data structure
     while (fastptr is not None):
         if ((fastptr is not None) and (fastptr.next is not None)):
             stack.insert(0,slowptr.value)
