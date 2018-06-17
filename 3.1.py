@@ -33,6 +33,8 @@ class threeStacks ( object ):
 
 	def getTop ( self, stackNumber, n = 3 * self.stackSize ):
 
+		# if the top of stack was at head: ( but this would not be a good way if the size of the stacks was not the same )
+		"""
 		if ( stackNumber == 1 ):
 			return 0
 
@@ -41,6 +43,8 @@ class threeStacks ( object ):
 
 		elif ( stackNumber == 3 ):
 			return int( 2 * ( n / 3 ) )
+		"""
+		return ((stackNumber - 1) * self.stackSize) + self.stackSize - 1 # the top is at tail of the stack
 
 	def isFull ( self, stackNumber ):
 
