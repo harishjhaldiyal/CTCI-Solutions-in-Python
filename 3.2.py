@@ -1,4 +1,33 @@
 """
+We may also implement this solution with LinkedList as Stack. If we kept track of the minimum at each state, we would be able to easily know the minimum. We can do
+this by having each node record what the minimum beneath itself is ( and also one record in the 'LinkedList' class that would store the global minimum ):
+
+class Node ( object ):
+    
+    def __init__ ( self, value ):
+        
+        self.minimumUntilNow = None
+        
+class LinedList ( object ):
+    
+    def __init__ ( self ):
+        
+        self.globalMinimum = None
+        
+    def setGlobalMinimum ( self ):
+        
+        if ( node.data < self.globalMinimum ):
+            self.globalMinimum = node.data
+            node.minimumUntilNow = node.data
+            
+        else:
+            node.minimumUntilNow = self.globalMinimum
+      
+
+"""
+
+
+"""
 stack = ( 1,2,3,4,5,6 )
 
 push, pop, min - O(1)
