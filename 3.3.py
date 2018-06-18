@@ -62,7 +62,7 @@ class SetOfStacks ( object ):
                 
                 else:
                 
-               	raise Exception ( ' Error ' )
+               	        raise Exception ( ' Error ' )
 
 
 
