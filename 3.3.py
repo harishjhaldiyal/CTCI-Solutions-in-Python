@@ -55,10 +55,13 @@ class SetOfStacks ( object ):
 
         def popAt ( self, ind ):
         
-                if ( ind < len ( self.stacksSet ) ):
+                if ( ( ind < len ( self.stacksSet ) ) and ( ind >= 0 ) ):
                 
                         getStack = self.stacksSet [ ind ]
-                       	return getStack.pop ( )
+                       	value = getStack.pop ( )
+                       	if ( getStack.getLength == 0 ):
+                       	    del self.stacksSet [ ind ]
+                       	return value
                 
                 else:
                 
