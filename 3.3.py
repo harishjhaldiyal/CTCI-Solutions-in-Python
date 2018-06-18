@@ -58,7 +58,7 @@ class SetOfStacks ( object ):
                 if ( ind < len ( self.stacksSet ) ):
                 
                         getStack = self.stacksSet [ ind ]
-                       	getStack.pop ( )
+                       	return getStack.pop ( )
                 
                 else:
                 
