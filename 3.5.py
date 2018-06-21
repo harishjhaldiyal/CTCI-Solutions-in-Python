@@ -5,8 +5,6 @@ size = 4
 
 top = 4
 
-tested = False
-
 temp_variable = 7
 
 temp_stack = (  )
