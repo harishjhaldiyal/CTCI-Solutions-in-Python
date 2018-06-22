@@ -119,4 +119,8 @@ Test:
 d1 = Animal ( dog )
 c1 = Animal ( cat )
 d2 = Animal ( dog )
+
+d2 - order = 1
+c1 - order = 2
+d1 - order = 3
 """
