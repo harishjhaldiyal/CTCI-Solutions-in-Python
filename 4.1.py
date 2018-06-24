@@ -29,7 +29,7 @@ def search ( graph, start, end ):
 
 	q.add ( start )
 
-	while ( !q.isEmpty ( ) ):
+	while ( not q.isEmpty ( ) ):
 		u = q.removeHead ( )
 		if ( u is not None ):
 			for v in u.getAdjacent ( ):
