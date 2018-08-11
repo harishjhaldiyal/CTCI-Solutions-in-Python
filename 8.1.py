@@ -1,94 +1,78 @@
 """
-countWays ( n ) = countWays ( n - 1 ) + countWays ( n - 2 )  + countWays ( n - 3 )
+when n = 0:
+possibleWays = 1
 
-steps = 4
-number of ways = 6
+when n = 1:
+possibleWays = 1
 
-1,1,1,1
-1,1,2
-1,2,1
-2,1,1
-1,3
-3,1
+when n = 2:
+possibleWays = 2
 
-countWays ( 4 ) = countWays ( 3 ) + countWays ( 2 )  + countWays ( 1 )
+when n = 3:
+possibleWays = 4
 
-1,1,1
-1,2
-2,1
-3
+when n = 4:
+possibleWays = 7
 
-
-countWays ( 1 ) = 1
-countWays ( 0 ) = 1
-countWays ( 2 ) = 1
-
-countWays ( 3 ) = countWays ( 2 ) + countWays ( 1 )  + countWays ( 0 )
-
-countWays ( 0 ) = countWays ( -1 ) + countWays ( -2 )  + countWays ( -3 )
-
-if ( n < 0 ):
-	return 0
-
-if ( n == 0 ):
-	return 1
-
-
-
-countWays ( 1 ) = countWays ( 0 ) + countWays ( -1 )  + countWays ( -2 )
-
-countWays ( 2 ) = countWays ( 1 ) + countWays ( 0 )  + countWays ( -1 )
-
-countWays ( 3 ) = countWays ( 2 ) + countWays ( 1 )  + countWays ( 0 )
-
-Memo array will take O(n) space. So yes again, the SPACE is O(n + n) = O(n).
+if n < 0, return 0
+if n == 0, return 1
 """
 
+def numOfWays ( n ):
 
-#code:
-
-def countWays ( n, memo ):
-
-	if ( n < 0 ):
-		return 0
-
-	if ( n == 0 ):
-		return 1
-
-	if ( memo [ n ] is not None ):
-		return memo [ n ]
-
-	memo [ n ] = countWays ( n - 1 ) + countWays ( n - 2 ) + countWays ( n - 3 )
-	return memo [ n ]
-
-def userInterface ( n ):
-
-	if ( input_check ( n ) ):
-		memo = [ None ] * n
-		return countWays ( n, memo )
-
+	if ( inputIsValid ( n ) ):
+		return numOfWaysHelper ( n )
 	else:
-		print ( "Invalid input" )
+		print ( "Invalid Input" )
 		return
 
-def iterativeSolution ( n ):
+def numOfWaysHelper ( n ):
 
-	memo = [ None ] * ( n + 1 )
-	memo [ 0 ] = 1
-	memo [ 1 ] = 1
-	memo [ 2 ] = 2
-	for i in range ( 3, n+1 ):
-		memo [ i ] = memo [ i - 1 ] + memo [ i - 2 ] + memo [ i - 3 ]
-	return memo [ n ]
+	if ( n < 0 ):
+            return 0
 
+        elif ( n == 0 ):
+            return 1
 
-
+        else:
+            return numOfWaysHelper ( n - 1 ) + numOfWaysHelper ( n - 2 ) + numOfWaysHelper ( n - 3 )
 
 
 
 
+def numOfWays ( n ):
 
+	if ( inputIsValid ( n ) ):
+		memo = [ None ] * n
+		return numOfWaysHelper ( n, memo )
+	else:
+		print ( "Invalid Input" )
+		return
 
+def numOfWaysHelper ( n, memo ):
+
+	if ( n == 0 ):
+		memo [ n ] = 1
+		return memo [ n ]
+
+	elif ( n == 1 ):
+		memo [ n ] = 1
+		return memo [ n ]
+
+	elif ( n == 2 ):
+		memo [ n ] = 2
+		return memo [ n ]
+
+	if ( memo [ n - 1 ] is None ):
+		memo [ n - 1 ] = numOfWaysHelper ( n - 1, memo )
+
+	if ( memo [ n - 2 ] is None ):
+		memo [ n - 2 ] = numOfWaysHelper ( n - 2, memo )
+
+	if ( memo [ n - 3 ] is None ):
+		memo [ n - 3 ] = numOfWaysHelper ( n - 3, memo )
+
+	return memo [ n - 1 ] + memo [ n - 2 ] + memo [ n - 3 ]
 
 
 
