@@ -1,32 +1,43 @@
 """
-grid = 2D array
-
-r rows, c columns
-
-grid:
-
+grid 1:
 [
- 
-[ 1, 0, 0, 0 ]
-[ 0, 0, 0, 0 ]
-[ 0, -1, 0, 0 ]
-[ 0, 0, 0, 0 ]
-
+ [ 1, 2 ],
+ [ None, 3 ]
 ]
 
-initial point = grid [ 0 ] [ 0 ]
-final point = grid [ r - 1 ] [ c - 1 ]
+grid 2:
+[
+ [ 1, 2, 3, 4 ],
+ [ None, 5, 6, 7 ],
+[ 8, 9, 10, 11 ],
+[ 12, 13, 14, 15 ]
+]
 
-one step before = grid [ r - 2 ] [ c - 1 ] or grid [ r - 1 ] [ c - 2 ]
+grid 3:
 
-one more step backwards for grid [ r - 2 ] [ c - 1 ]:
-grid [ r - 3 ] [ c - 1 ] or grid [ r - 2 ] [ c - 2 ]
+[
+ [ 1 ]
+]
 
-one more step backwards for grid [ r - 1 ] [ c - 2 ]:
-grid [ r - 2 ] [ c - 2 ] or grid [ r - 1 ] [ c - 3 ]
+grid 4:
 
-recursive case:
-grid [ r - 1] [ c - 1 ] = grid [ r - 2 ] [ c - 1 ] + grid [ r - 1 ] [ c - 2 ]
+[
+ [ 1, 2 ]
+]
+
+grid 5:
+
+[
+ [ 1, 2, 3 ]
+]
+
+grid 6:
+
+[
+ [ 1, 2 ],
+ [ 3, 4 ]
+]
+
 
 """
 
@@ -35,44 +46,114 @@ grid [ r - 1] [ c - 1 ] = grid [ r - 2 ] [ c - 1 ] + grid [ r - 1 ] [ c - 2 ]
 
 
 
+"""
+Pseudocode:
 
+path = [ ]
 
+1. If the current point is out of bound of the grid or current point is None, then return False
 
+2. Else, add the current point to the path
 
+3. Repeat the same process for ( next element in the row or next element in the column )
 
+"""
 
-def pathTillPosition ( grid, r , c, path, obstacleCells ):
+#Time complexity: 2 ^ ( n.o of rows + n.o of cols )
+#Space complexity: n.o of rows + n.o of cols
 
-	if ( r < 0 or c < 0 or not grid [ r ] [ c ] ):
-		return False
+#Code
 
-	isAtOrigin = ( r == 0 ) and ( c == 0 )
+def robotInGrid ( grid ):
 
-	point = [ r, c ]
-	if ( point in obstacleCells ):
-		return False
-
-	if ( isAtOrigin or pathTillPosition ( grid, r - 1, c, path ) or pathTillPosition ( grid, r , c - 1, path ) ) :
-		path.append ( point )
-		return True
-
-	obstacleCells.add ( point )
-	return False
-
-
-def userInterface ( grid ):
-
-	if ( input_check ( grid ) ):
-		obstacleCells = set ( )
+	if ( isValid ( grid ) ):
+		numberOfRows = len ( grid )
+		numberOfCols = len ( grid [ 0 ] )
 		path = [ ]
-		if ( pathTillPosition ( grid, len ( grid ) - 1 , len ( grid [ 0 ] ) - 1, path, obstacleCells ) ):
-			return path
-
+		if ( robotInGridHelper ( grid, path, numberOfRows, numberOfCols, 0, 0 ) ):
+			return path.reverse ( )
 		else:
-			print ( "Path not possible" )
+			print ( "No path exist" )
 			return
 
 	else:
 		print ( "Invalid Input" )
 		return
+
+
+
+
+
+
+
+
+
+
+
+
+
+def robotInGridHelper ( grid, path, numberOfRows, numberOfCols, firstIndex, secondIndex ):
+
+	if ( ( secondIndex > numberOfCols - 1 ) or ( firstIndex  > numberOfRows - 1 ) ):
+		return False
+
+	currentCell = grid [ firstIndex ] [ secondIndex ]
+	if ( currentCell is None ):
+		return False
+		
+        currentPoint = [ firstIndex, secondIndex ]
+	
+	target = grid [ numberOfRows - 1 ] [ numberOfCols - 1 ]
+
+	if ( currentCell == target ):
+		return True
+
+	if ( ( robotInGridHelper ( grid, path, numberOfRows, numberOfCols, firstIndex, secondIndex + 1 ) ) or  ( robotInGridHelper ( grid, path, numberOfRows, numberOfCols, firstIndex + 1, secondIndex ) ) ):
+		"""
+		Note that the 'or' operator supports short circuiting: if the first part of the 'or' is true, then the process will not evaluate the second part, and therefore, only one path will be there from starting to end.
+		"""
+		path.append ( currentPoint )
+                return True
+
+        else:
+                return False
+
+
+
+
+
+
+
+
+
+def robotInGridHelper2 ( grid, path, numberOfRows, numberOfCols, firstIndex, secondIndex, falseHashSet ):
+
+	if ( ( secondIndex > numberOfCols - 1 ) or ( firstIndex  > numberOfRows - 1 ) ):
+		return False
+
+	currentPoint = [ firstIndex, secondIndex ]
+	if ( currentPoint in falseHashSet ):
+		return False
+
+        currentCell = grid [ firstIndex ] [ secondIndex ]
+	if ( currentCell is None ):
+		return False
+	
+	target = grid [ numberOfRows - 1 ] [ numberOfCols - 1 ]
+
+	if ( currentCell == target ):
+		return True
+
+	if ( ( robotInGridHelper ( grid, path, numberOfRows, numberOfCols, firstIndex, secondIndex + 1, falseHashSet ) ) or  ( robotInGridHelper ( grid, path, numberOfRows, numberOfCols, firstIndex + 1, secondIndex, falseHashSet ) ) ):
+		"""
+		Note that the 'or' operator supports short circuiting: if the first part of the 'or' is true, then the process will not evaluate the second part, and therefore, only one path will be there from starting to end.
+		"""
+		path.append ( currentPoint )
+                return True
+
+        else:
+                falseHashSet.add ( currentPoint )
+                return False
+
+
 
